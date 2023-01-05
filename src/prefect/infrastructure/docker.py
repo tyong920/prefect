@@ -226,7 +226,7 @@ class DockerContainer(Infrastructure):
         default=True,
         description="If set, the output will be streamed from the container to local standard output.",
     )
-
+    runtime: Optional[str] = Field(default=None, description="runtime of a Docker image to user.")
     _block_type_name = "Docker Container"
     _logo_url = "https://images.ctfassets.net/gm98wzqotmnx/2IfXXfMq66mrzJBDFFCHTp/6d8f320d9e4fc4393f045673d61ab612/Moby-logo.png?h=250"
 
@@ -348,6 +348,7 @@ class DockerContainer(Infrastructure):
             extra_hosts=self._get_extra_hosts(docker_client),
             name=self._get_container_name(),
             volumes=self.volumes,
+            runtime=self.runtime
         )
 
     def _create_and_start_container(self) -> "Container":
